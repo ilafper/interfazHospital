@@ -1,0 +1,27 @@
+/*INICIO DE SESION*/
+
+.card{
+    width: 20%;
+    padding: 40px;
+    border: 2px solid rgb(0, 0, 0) !important; 
+}
+
+.boton{
+    color: white;
+    background-color: black;
+    border: none;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+/*parte de admin*/
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 12vh;
+    background-color: #87CEEB;
+    font-weight: bold;
+    font-size: 30px;
+}
