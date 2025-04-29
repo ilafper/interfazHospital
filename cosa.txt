@@ -1,0 +1,7 @@
+console.log("1. Crear paciente");
+        console.log("2. historialCitas");
+        console.log("3. Añadir cita");
+        console.log("4. Editar cita(asistio o no)");
+        console.log("5. Filtro");
+        console.log("6. Salir");
+        opcion = parseInt(await leeMenu("Seleccione opción: "));

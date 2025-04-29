@@ -1,12 +1,14 @@
 /*INICIO DE SESION*/
-
-.card{
-    width: 20%;
-    padding: 40px;
-    border: 2px solid rgb(0, 0, 0) !important; 
+body {
+    height: 100vh;
 }
 
-.boton{
+.card {
+    padding: 40px;
+    border: 2px solid rgb(0, 0, 0) !important;
+}
+
+.boton {
     color: white;
     background-color: black;
     border: none;
@@ -15,13 +17,111 @@
 }
 
 /*parte de admin*/
-.header{
+.header {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    background-color: #a5c5ff;
+}
+
+.mensaje {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.salir {
+    font-size: 24px;
+    color: #333;
+    text-decoration: none;
+}
+
+.salir:hover {
+    color: #000;
+}
+
+/*botones admin*/
+.recuadro {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 12vh;
-    background-color: #87CEEB;
-    font-weight: bold;
-    font-size: 30px;
+    height: 85vh;
+}
+
+.formu {
+    border: 3px solid black;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+/*PARTE administrativo*/
+.opciones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    gap: 15px;
+}
+
+.option {
+    color: black;
+    text-decoration: none;
+    background-color: #add8e6;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 250px;
+}
+
+.option:hover {
+    background-color: #9ccae3;
+}
+
+/*PARTE DE CARGAR LOS PACIENTES*/
+
+.tit{
+    text-align: center;
+    margin-top: 3%;
+}
+.listaPacientes{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 3%;
+}
+/*estilo targeta paciente*/
+.paciente {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    max-width: 400px;
+    margin: 10px auto;
+}
+
+.paciente:hover {
+    cursor: pointer;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.paciente img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.datos p {
+    margin: 4px 0;
+    font-size: 14px;
 }
