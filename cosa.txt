@@ -5,3 +5,5 @@ console.log("1. Crear paciente");
         console.log("5. Filtro");
         console.log("6. Salir");
         opcion = parseInt(await leeMenu("Seleccione opción: "));
+
+tvdb api
