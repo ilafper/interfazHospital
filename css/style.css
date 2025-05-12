@@ -8,12 +8,13 @@ body {
     border: 2px solid rgb(0, 0, 0) !important;
 }
 
-.boton {
+.checklogin {
     color: white;
     background-color: black;
     border: none;
     font-weight: bold;
     border-radius: 3px;
+    padding: 10px;
 }
 
 /*parte de admin*/
