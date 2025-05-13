@@ -80,4 +80,36 @@ $(document).ready(function () {
       }
     });
   });
+
+  /*CARGAR PACIENTES */
+  function cargarPacientes() {
+    $.ajax({
+      url: 'https://api-hospital-rosy.vercel.app/api/pacientes',
+      method: 'GET',
+      success: function (pacientes) {
+        const contenedor = $('.listaPacientes');
+        contenedor.empty(); // Limpiar contenido anterior si existe
+
+        pacientes.forEach(paciente => {
+          const tarjeta = `
+            <a href="../html/crearCita.html?id=${paciente._id}" class="paciente">
+              <img src="../imagenes/paciente.png" alt="imagen paciente" class="img-fluid">
+              <section class="datos">
+                <p><strong>Nombre:</strong> ${paciente.nombre}</p>
+                <p><strong>Apellido:</strong> ${paciente.apellido}</p>
+                <p><strong>Dirección:</strong> ${paciente.direccion}</p>
+                <p><strong>Teléfono:</strong> ${paciente.telefono || 'No registrado'}</p>
+              </section>
+            </a>
+          `;
+          contenedor.append(tarjeta);
+        });
+      },
+      error: function () {
+        alert('Error al cargar los pacientes.');
+      }
+    });
+  }
+
+  cargarPacientes();
 });

@@ -92,10 +92,13 @@ body {
     display: flex;
     flex-wrap: wrap;
     margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 /*estilo targeta paciente*/
 .paciente {
+    width: 400px;
     display: flex;
     align-items: center;
     background-color: #f8f9fa;
@@ -105,7 +108,7 @@ body {
     text-decoration: none;
     color: #333;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    max-width: 400px;
+    min-width: 300px;
     margin: 10px auto;
 }
 
