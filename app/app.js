@@ -130,7 +130,7 @@ $(document).ready(function () {
           };
 
           console.log('Cita a enviar:', citaPaciente);
-          alert(JSON.stringify(citaPaciente)); // Congela y te deja ver los datos
+          //alert(JSON.stringify(citaPaciente)); // Congela y te deja ver los datos
 
 
           $.ajax({
@@ -139,7 +139,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(citaPaciente),
             success: function (respuesta) {
-              console.log('Respuesta de la API:', respuesta);
+              
               alert('Cita registrada correctamente');
               $('.modalFecha').fadeOut();
               $('#fechaSeleccionada').val('');
