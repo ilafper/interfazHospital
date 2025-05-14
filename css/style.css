@@ -42,18 +42,30 @@ body {
 }
 
 /*botones admin*/
+
+
+
+.modalFecha {
+  display: none; /* Oculto inicialmente */
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
 .recuadro {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 85vh;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 15px;
+  min-width: 320px;
+  max-width: 500px;
+  border: 3px solid black;
 }
 
 .formu {
-    border: 3px solid black;
-    padding: 30px;
-    border-radius: 5px;
+    padding: 10px;
 }
 
 /*PARTE administrativo*/
@@ -84,11 +96,12 @@ body {
 
 /*PARTE DE CARGAR LOS PACIENTES*/
 
-.tit{
+.tit {
     text-align: center;
     margin-top: 3%;
 }
-.listaPacientes{
+
+.listaPacientes {
     display: flex;
     flex-wrap: wrap;
     margin-top: 3%;

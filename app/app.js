@@ -59,7 +59,7 @@ $(document).ready(function () {
   $('.crearPaciente').click(async function (e) {
     e.preventDefault(); // Evita el envío tradicional del formulario
 
-    const especialista = {
+    const paciente = {
       usernamePaciente: $('#usernamePaciente').val(),
       apellidoPaciente: $('#apellidoPaciente').val(),
       direccionPaciente: $('#direccion').val(),
@@ -70,7 +70,7 @@ $(document).ready(function () {
       url: 'https://api-hospital-rosy.vercel.app/api/crearPaciente',
       method: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify(especialista),
+      data: JSON.stringify(paciente),
       success: function (response) {
         //alert(response.message);
         $('.formu')[0].reset();
@@ -83,99 +83,93 @@ $(document).ready(function () {
 
   /*CARGAR PACIENTES */
   function cargarPacientes() {
-     $.ajax({
+    $.ajax({
       url: 'https://api-hospital-rosy.vercel.app/api/pacientes',
       method: 'GET',
       success: function (pacientes) {
         const contenedor = $('.listaPacientes');
-        contenedor.empty(); // Limpiar contenido anterior
+        contenedor.empty();
+        let pacienteSeleccionado = null;
 
         pacientes.forEach(paciente => {
           const tarjeta = $(`
-            <a href="../html/crearCita.html" class="paciente">
-              <img src="../imagenes/paciente.png" alt="imagen paciente" class="img-fluid">
-              <section class="datos">
-                <p><strong>Nombre:</strong> ${paciente.nombre}</p>
-                <p><strong>Apellido:</strong> ${paciente.apellido}</p>
-                <p><strong>Dirección:</strong> ${paciente.direccion}</p>
-                <p><strong>Teléfono:</strong> ${paciente.telefono || 'No registrado'}</p>
-              </section>
-            </a>
-          `);
+          <section class="paciente">
+            <img src="../imagenes/paciente.png" alt="imagen paciente" class="img-fluid">
+            <section class="datos">
+              <p><strong>Nombre:</strong> ${paciente.nombre}</p>
+              <p><strong>Apellido:</strong> ${paciente.apellido}</p>
+              <p><strong>Dirección:</strong> ${paciente.direccion}</p>
+              <p><strong>Teléfono:</strong> ${paciente.telefono}</p>
+            </section>
+          </section>
+        `);
 
-         
           tarjeta.click(function (e) {
-            e.preventDefault(); // No navega automáticamente
-          
-            // Guardas los datos en localStorage
-            const pacienteData = {
-              _id: paciente._id,
-              nombre: paciente.nombre,
-              apellido: paciente.apellido,
-            };
-          
-            localStorage.setItem('pacienteSeleccionado', JSON.stringify(pacienteData));
-          
-            // Rediriges a crearCita.html sin pasar datos en la URL
-            window.location.href = '../html/crearCita.html';
+            e.preventDefault();
+            pacienteSeleccionado = paciente;
+            $('.modalFecha').fadeIn();
+            console.log('Paciente seleccionado:', pacienteSeleccionado);
           });
+
           contenedor.append(tarjeta);
         });
-        
+
+        $('.darCita').click(function () {
+          const fecha = $('#fechaSeleccionada').val();
+
+          if (!fecha || !pacienteSeleccionado) {
+            alert('Selecciona una fecha válida y un paciente.');
+            return;
+          }
+
+          const citaPaciente = {
+            nombre: pacienteSeleccionado.nombre,
+            apellido: pacienteSeleccionado.apellido,
+            codigoPaciente: pacienteSeleccionado._id,
+            fecha: fecha
+          };
+
+          console.log('Cita a enviar:', citaPaciente);
+          alert(JSON.stringify(citaPaciente)); // Congela y te deja ver los datos
+
+
+          $.ajax({
+            url: 'https://api-hospital-rosy.vercel.app/api/asignarCita',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(citaPaciente),
+            success: function (respuesta) {
+              console.log('Respuesta de la API:', respuesta);
+              alert('Cita registrada correctamente');
+              $('.modalFecha').fadeOut();
+              $('#fechaSeleccionada').val('');
+            },
+            error: function (e) {
+              alert('Error al registrar la cita.');
+            }
+          });
+        });
       },
       error: function () {
         alert('Error al cargar los pacientes.');
       }
     });
   }
+
   cargarPacientes();
 
 
-
-  $(document).ready(function () {
-    const paciente = JSON.parse(localStorage.getItem('pacienteSeleccionado'));
-  
-    if (!paciente) {
-      return;
-    }
-  
-    console.log("Paciente seleccionado:", paciente); // Aquí puedes ver todos los datos
-    
-  
-    $('.darCita').click(function (e) {
-      e.preventDefault();
-  
-      const fecha = $('#fecha').val();
-  
-      if (!fecha) {
-        alert('Selecciona una fecha');
-        return;
-      }
-  
-      const cita = {
-        codigoPaciente: paciente._id,
-        nombrePaciente: `${paciente.nombre} ${paciente.apellido}`,
-        fecha: fecha
-      };
-  
-      $.ajax({
-        url: 'https://api-hospital-rosy.vercel.app/api/asignarCita',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(cita),
-        success: function (res) {
-          alert(res.mensaje);
-          window.location.href = '../html/seleccionarPaciente.html';
-        },
-        error: function (err) {
-          const errorMsg = err.responseJSON?.mensaje || 'Error al guardar la cita';
-          alert(errorMsg);
-        }
-      });
-    });
+  //cerrar modal
+  $('.cerrarModal').click(function (e) {
+    e.preventDefault();
+    $('.modalFecha').fadeOut();
   });
-  
-  
+
+
+
+
+
+
 
 
 });
