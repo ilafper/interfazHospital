@@ -115,6 +115,7 @@ $(document).ready(function () {
         });
 
         $('.darCita').click(function () {
+          e.preventDefault();
           const fecha = $('#fechaSeleccionada').val();
 
           if (!fecha || !pacienteSeleccionado) {
@@ -140,12 +141,14 @@ $(document).ready(function () {
             data: JSON.stringify(citaPaciente),
             success: function (respuesta) {
               
-              alert('Cita registrada correctamente');
+              alert('Cita registrada correctamente',respuesta);
               $('.modalFecha').fadeOut();
               $('#fechaSeleccionada').val('');
+              console.log(respuesta);
+              
             },
             error: function (e) {
-              alert('Error al registrar la cita.');
+              alert('Error al registrar la cita.',e);
             }
           });
         });
