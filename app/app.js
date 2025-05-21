@@ -81,7 +81,10 @@ $(document).ready(function () {
     });
   });
 
-  /*CARGAR PACIENTES */
+
+
+
+
   function cargarPacientes() {
     $.ajax({
       url: 'https://api-hospital-rosy.vercel.app/api/pacientes',
@@ -102,7 +105,7 @@ $(document).ready(function () {
               <p><strong>Teléfono:</strong> ${paciente.telefono}</p>
             </section>
           </section>
-        `);
+          `);
 
           tarjeta.click(function (e) {
             e.preventDefault();
@@ -140,15 +143,15 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(citaPaciente),
             success: function (respuesta) {
-              
-              alert('Cita registrada correctamente',respuesta);
+
+              alert('Cita registrada correctamente', respuesta);
               $('.modalFecha').fadeOut();
               $('#fechaSeleccionada').val('');
               console.log(respuesta);
-              
+
             },
             error: function (e) {
-              alert('Error al registrar la cita.',e);
+              alert('Error al registrar la cita.', e);
             }
           });
         });
@@ -158,14 +161,88 @@ $(document).ready(function () {
       }
     });
   }
-
   cargarPacientes();
+
+
+  //CARGAR PACIENTES PARA EL HISTORIAL DE CITAS.
+function cargarPacientes2() {
+  $.ajax({
+    url: 'https://api-hospital-rosy.vercel.app/api/pacientes',
+    method: 'GET',
+    success: function (pacientes) {
+      const contenedor2 = $('.listaPacienteHistorial');
+      contenedor2.empty();
+      let pacienteSeleccionado = null;
+
+      pacientes.forEach(paciente => {
+        const tarjeta = $(`
+          <section class="paciente">
+            <img src="../imagenes/paciente.png" alt="imagen paciente" class="img-fluid">
+            <section class="datos">
+              <p><strong>Nombre:</strong> ${paciente.nombre}</p>
+              <p><strong>Apellido:</strong> ${paciente.apellido}</p>
+              <p><strong>Dirección:</strong> ${paciente.direccion}</p>
+              <p><strong>Teléfono:</strong> ${paciente.telefono}</p>
+            </section>
+          </section>
+        `);
+        contenedor2.append(tarjeta);
+
+        tarjeta.click(function (e) {
+          e.preventDefault();
+          pacienteSeleccionado = paciente;
+          $('.modalHistorial').fadeIn();
+
+          const idPaciente = { id: pacienteSeleccionado._id };
+
+          $.ajax({
+            url: 'https://api-hospital-rosy.vercel.app/api/vercitaspaciente',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(idPaciente),
+            success: function (citasPaciente) {
+              console.log(citas);
+
+              // Limpiar citas anteriores
+              const contenedorCitas = $('.histoCitas'); // Asegúrate de tener este div en tu modal
+              contenedorCitas.empty();
+
+              if (citasPaciente.length === 0) {
+                contenedorCitas.append('<p>No hay citas registradas para este paciente.</p>');
+              } else {
+                citasPaciente.forEach(cita => {
+                  const citaHtml = $(`
+                    <div class="cita">
+                      <p><strong>Fecha:</strong> ${cita.fecha}</p>
+                      <p><strong>Asistió:</strong> ${cita.asistio}</p>
+                    </div>
+                  `);
+                  contenedorCitas.append(citaHtml);
+                });
+              }
+            },
+            error: function (e) {
+              alert('Error al cargar las citas.');
+              console.error(e);
+            }
+          });
+        });
+      });
+    },
+    error: function () {
+      alert('Error al cargar los pacientes.');
+    }
+  });
+}
+
+cargarPacientes2();
 
 
   //cerrar modal
   $('.cerrarModal').click(function (e) {
     e.preventDefault();
     $('.modalFecha').fadeOut();
+    $('.modalHistorial').fadeOut();
   });
 
 
