@@ -18,7 +18,11 @@ $(document).ready(function () {
       success: function (response) {
         //console.log(response);
         if (response.rol === "admin") {
+          console.log(response);
+          
+          $('.nombreP').html(response.nombre);
           window.location.href = "../html/admin.html";
+          
         } else if (response.rol === "administrativo") {
           window.location.href = "../html/administrativo.html";
         } else {

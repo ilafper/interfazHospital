@@ -102,6 +102,16 @@ body {
     padding: 10px;
 }
 
+.cerrarModal{
+    margin-top: 10px;
+    background-color: #000;
+    color: white;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+}
+
 /*PARTE administrativo*/
 .opciones {
     display: flex;
@@ -113,6 +123,7 @@ body {
 
 .option {
     color: black;
+    font-weight: bold;
     text-decoration: none;
     background-color: #add8e6;
     text-align: center;
