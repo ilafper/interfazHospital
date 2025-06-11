@@ -6,23 +6,19 @@ $(document).ready(function () {
     let nombre = $('#username').val();
     let password = $('#password').val();
 
-    await $.ajax({
+    await $.ajax({                                          
       type: 'POST',
       url: 'https://api-hospital-rosy.vercel.app/api/checkLogin',
-      contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma
+      contentType: 'application/json',
       data: JSON.stringify({
         "nombre": nombre,
         "password": password
       }),
 
       success: function (response) {
-        //console.log(response);
+        //console.log(response)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
         if (response.rol === "admin") {
-          console.log(response);
-          
-          $('.nombreP').html(response.nombre);
           window.location.href = "../html/admin.html";
-          
         } else if (response.rol === "administrativo") {
           window.location.href = "../html/administrativo.html";
         } else {
@@ -32,6 +28,8 @@ $(document).ready(function () {
     });
 
   });
+
+
   /*PARTE DE CREAR ESPECIALISTA*/
 
   $('.crearEspe').click(async function (e) {
