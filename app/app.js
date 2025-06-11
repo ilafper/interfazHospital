@@ -22,7 +22,7 @@ $(document).ready(function () {
         } else if (response.rol === "administrativo") {
           window.location.href = "../html/administrativo.html";
         } else {
-          mensaje("Rol no reconocido");
+         
         }
       }
     });
